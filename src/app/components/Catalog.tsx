@@ -1,0 +1,212 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import type { Arrangement, Category } from "@/lib/types";
+import { getArrangements, getCategories } from "@/lib/data";
+import ArrangementCard from "./ArrangementCard";
+import ArrangementModal from "./ArrangementModal";
+import Reveal from "./Reveal";
+
+export default function Catalog() {
+  const [arrangements, setArrangements] = useState<Arrangement[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const [activeCat, setActiveCat] = useState<string>("todos");
+  const [selected, setSelected] = useState<Arrangement | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    Promise.all([getArrangements(), getCategories()]).then(([arr, cats]) => {
+      if (!active) return;
+      setArrangements(arr);
+      setCategories(cats);
+      setLoading(false);
+      // Abrir un arreglo si la URL trae ?arreglo=...
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("arreglo");
+      if (slug) {
+        const found = arr.find((a) => a.slug === slug);
+        if (found) setSelected(found);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const featured = useMemo(
+    () => arrangements.filter((a) => a.isFeatured).slice(0, 3),
+    [arrangements]
+  );
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return arrangements.filter((a) => {
+      const matchesCat =
+        activeCat === "todos" || a.category?.slug === activeCat;
+      if (!matchesCat) return false;
+      if (!q) return true;
+      const haystack = [
+        a.name,
+        a.category?.name ?? "",
+        a.shortDescription ?? "",
+        ...(a.flowers ?? []),
+      ]
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(q);
+    });
+  }, [arrangements, query, activeCat]);
+
+  const isBrowsing = query.trim() !== "" || activeCat !== "todos";
+
+  function openArrangement(a: Arrangement) {
+    setSelected(a);
+    const url = new URL(window.location.href);
+    url.searchParams.set("arreglo", a.slug);
+    window.history.replaceState({}, "", url);
+  }
+
+  function closeModal() {
+    setSelected(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("arreglo");
+    window.history.replaceState({}, "", url);
+  }
+
+  return (
+    <>
+      {/* Destacados */}
+      {!loading && featured.length > 0 && (
+        <section id="destacados" className="paper px-5 py-20 sm:px-8 sm:py-24">
+          <div className="mx-auto max-w-6xl">
+            <Reveal>
+              <p className="eyebrow text-center text-sage-dark">Selección de la casa</p>
+              <h2 className="mt-3 text-center font-display text-4xl text-olive sm:text-5xl">
+                Arreglos destacados
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((a, i) => (
+                <Reveal key={a._id} delay={i * 90}>
+                  <ArrangementCard arrangement={a} onOpen={openArrangement} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Catálogo completo + búsqueda + filtros */}
+      <section id="catalogo" className="bg-cream px-5 py-20 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <p className="eyebrow text-center text-sage-dark">Nuestro catálogo</p>
+            <h2 className="mt-3 text-center font-display text-4xl text-olive sm:text-5xl">
+              Explora todos los arreglos
+            </h2>
+          </Reveal>
+
+          {/* Buscador */}
+          <div className="mx-auto mt-10 max-w-md">
+            <div className="relative">
+              <svg
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sage"
+                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Buscar por flor, nombre o categoría…"
+                aria-label="Buscar arreglos"
+                className="w-full rounded-full border border-sage/40 bg-cream-light py-3.5 pl-11 pr-4 text-olive placeholder:text-olive/40 outline-none transition focus:border-sage focus:ring-2 focus:ring-sage/30"
+              />
+            </div>
+          </div>
+
+          {/* Filtros por categoría */}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-2.5">
+            <FilterPill
+              label="Todos"
+              active={activeCat === "todos"}
+              onClick={() => setActiveCat("todos")}
+            />
+            {categories.map((c) => (
+              <FilterPill
+                key={c._id}
+                label={c.name}
+                active={activeCat === c.slug}
+                onClick={() => setActiveCat(c.slug)}
+              />
+            ))}
+          </div>
+
+          {/* Cuadrícula */}
+          <div className="mt-12">
+            {loading ? (
+              <SkeletonGrid />
+            ) : filtered.length === 0 ? (
+              <p className="py-16 text-center text-olive/50">
+                No encontramos arreglos con esa búsqueda. Intenta con otra palabra.
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 gap-5 sm:gap-7 lg:grid-cols-3">
+                {filtered.map((a, i) => (
+                  <Reveal key={a._id} delay={isBrowsing ? 0 : Math.min(i * 60, 360)}>
+                    <ArrangementCard arrangement={a} onOpen={openArrangement} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <ArrangementModal arrangement={selected} onClose={closeModal} />
+    </>
+  );
+}
+
+function FilterPill({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`rounded-full px-5 py-2 text-sm transition ${
+        active
+          ? "bg-olive text-cream-light"
+          : "border border-sage/40 text-olive/70 hover:border-sage hover:text-olive"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function SkeletonGrid() {
+  return (
+    <div className="grid grid-cols-2 gap-5 sm:gap-7 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="animate-pulse">
+          <div className="aspect-[4/5] w-full rounded-xl2 bg-cream-deep" />
+          <div className="mt-3 h-4 w-2/3 rounded bg-cream-deep" />
+          <div className="mt-2 h-3 w-1/3 rounded bg-cream-deep" />
+        </div>
+      ))}
+    </div>
+  );
+}

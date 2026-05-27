@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "context-optimizer": {
+      "command": "context-optimizer-mcp",
+      "env": {
+        "CONTEXT_OPT_LLM_PROVIDER": "gemini",
+        "CONTEXT_OPT_GEMINI_KEY": "",
+        "CONTEXT_OPT_EXA_KEY": "",
+        "CONTEXT_OPT_ALLOWED_PATHS": "/Users/basti/Documents/floreria/un-jardin"
+      }
+    }
+  }
+}
