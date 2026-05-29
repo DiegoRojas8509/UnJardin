@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, Hanken_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Hanken_Grotesk } from "next/font/google";
 import { site } from "@/lib/config";
 import "./globals.css";
 
-const display = Fraunces({
+const display = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: `${site.name} · Florería en ${site.city}`,
   description: site.tagline,
   openGraph: {
-    title: `${site.name} · Florería`,
+    title: `${site.name} · Flower Shop`,
     description: site.tagline,
     type: "website",
   },

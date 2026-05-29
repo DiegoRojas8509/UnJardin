@@ -5,7 +5,9 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 export default defineCliConfig({
   api: { projectId, dataset },
-  // Nombre del estudio publicado (ej. https://un-jardin.sanity.studio)
   studioHost: "un-jardin",
-  autoUpdates: true,
+  deployment: {
+    autoUpdates: true,
+    appId: "l6l0crcgw57s6xz7ouxge6e3",
+  },
 });

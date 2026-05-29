@@ -8,26 +8,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta de marca Un Jardín (verde olivo + crema + kraft)
-        olive: {
-          DEFAULT: "#3C4A2C",
-          dark: "#2E3722",
-          soft: "#5A6A41",
+        // Paleta Florería Dulce Amor — negro carbón + oro
+        carbon: {
+          DEFAULT: "#0a0705",
+          soft: "#15100b",
         },
-        sage: {
-          DEFAULT: "#94A07E",
-          light: "#B4BD9F",
-          dark: "#6E7B55",
+        gold: {
+          DEFAULT: "#f6c34b",
+          light: "#ffe9a8",
+          deep: "#d99323",
         },
+        amber: "#b5651d",
+        copper: "#7a4a22",
         cream: {
-          DEFAULT: "#F6EFD8",
-          light: "#FBF8F0",
-          deep: "#EFE6C9",
+          DEFAULT: "#f7efdd",
+          soft: "#cdbfa6",
         },
-        kraft: "#D8C6A3",
-        peach: "#E6B391",
-        craspedia: "#E2B24A",
-        berry: "#C24E3C",
       },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],
@@ -35,6 +31,9 @@ const config: Config = {
       },
       borderRadius: {
         xl2: "1.25rem",
+      },
+      backgroundImage: {
+        "gold-gradient": "linear-gradient(90deg, #ffe9a8, #f6c34b 45%, #d99323 80%, #b5651d)",
       },
       keyframes: {
         "fade-up": {

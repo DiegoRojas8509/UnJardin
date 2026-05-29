@@ -3,35 +3,35 @@
 // ───────────────────────────────────────────────────────────
 
 export const site = {
-  name: "Un Jardín",
-  // Frase que aparece bajo el logo
-  tagline: "Un espacio floral para quienes disfrutan lo simple y lo bonito.",
+  name: "Dulce Amor",
+  tagline: "15 años creando arreglos para bodas, presentaciones y toda ocasión especial.",
   intro:
-    "Cada arreglo se hace a mano con flores de temporada. Mira el catálogo y pide tu cotización por WhatsApp.",
+    "Arreglos florales hechos con pasión para bodas, cumpleaños y toda ocasión especial. Mira nuestro catálogo y pide tu cotización por WhatsApp.",
 
   // Número de WhatsApp en formato internacional, SIN signos ni espacios.
-  // México: 52 + lada + número.  Ej: 52 477 140 7875 → "524771407875"
-  whatsapp: "524451586866",
-  phoneDisplay: "445 158 6866",
+  // México: 52 + lada + número.  Ej: 52 445 113 9018 → "524451139018"
+  whatsapp: "524451139018",
+  phoneDisplay: "445 113 9018",
 
-  instagram: "https://www.instagram.com/unjardin__/",
-  instagramHandle: "@unjardin__",
+  instagram: "https://www.instagram.com/floreria.dulce.am7/",
+  instagramHandle: "@floreria.dulce.am7",
 
-  // Dirección y horario (edítalos libremente)
-  address: "Av. Guanajuato 1403, Jardines del Moral, 37160 León de los Aldama, Gto.",
-  mapsUrl: "https://maps.google.com/?q=Av.+Guanajuato+1403,+Jardines+del+Moral,+León,+Gto.",
-  city: "León, Gto.",
-  hours: "Lunes a sábado · cierra 4:00 p.m.",
+  tiktok: "https://www.tiktok.com/@floreria.dulce.am7",
+  tiktokHandle: "@floreria.dulce.am7",
 
-  // Texto de la sección "Nosotros"
+  address: "Av. Francisco I. Madero 31, Zona Centro, 38980 Uriangato, Gto.",
+  mapsUrl: "https://maps.google.com/?q=Av.+Francisco+I.+Madero+31,+Zona+Centro,+Uriangato,+Gto.",
+  city: "Uriangato, Gto.",
+  hours: "Lunes a sábado · 9:00 a.m. – cierre",
+
   about:
-    "Un Jardín nació del gusto por lo simple y lo bonito. Trabajamos flores frescas de temporada para crear ramos y arreglos con un estilo natural y cálido, pensados para regalar, decorar y celebrar los momentos que importan.",
+    "Florería Dulce Amor nació del amor por las flores y la pasión por crear momentos que no se olvidan. Con más de 15 años de experiencia en Uriangato, diseñamos arreglos para bodas, XV años, cumpleaños y toda ocasión especial. Cada flor es elegida con cuidado para que tu regalo sea único e inolvidable.",
 };
 
 // Mensaje que se manda por WhatsApp al cotizar.
 // {nombre} y {precio} se reemplazan con los datos del arreglo.
 export const whatsappTemplate =
-  'Hola Un Jardín 🌿 Me interesa cotizar el arreglo "{nombre}" ({precio}). ¿Me podrías dar más información?';
+  'Hola Dulce Amor 🌹 Me interesa cotizar el arreglo "{nombre}" ({precio}). ¿Me podrían dar más información?';
 
 export const whatsappGeneral =
-  "Hola Un Jardín 🌿 Me gustaría más información sobre sus arreglos florales.";
+  "Hola Dulce Amor 🌹 Me gustaría más información sobre sus arreglos florales.";

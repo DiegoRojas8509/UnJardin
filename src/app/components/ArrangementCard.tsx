@@ -17,45 +17,53 @@ export default function ArrangementCard({
       className="group block w-full text-left"
       aria-label={`Ver ${arrangement.name}`}
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl2 bg-cream-deep">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl2 bg-carbon-soft">
         {arrangement.imageUrl ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={arrangement.imageUrl}
             alt={arrangement.name}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
         ) : (
           <Placeholder name={arrangement.name} />
         )}
 
+        {/* Overlay oscuro permanente en la parte baja para legibilidad */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-carbon/70 to-transparent" />
+
         {arrangement.isFeatured && (
-          <span className="absolute left-3 top-3 rounded-full bg-cream-light/90 px-3 py-1 text-[0.62rem] font-medium uppercase tracking-[0.2em] text-olive backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-full border border-gold/40 bg-carbon/80 px-3 py-1 text-[0.62rem] font-medium uppercase tracking-[0.2em] text-gold backdrop-blur">
             Destacado
           </span>
         )}
 
-        <span className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-olive/0 pb-5 opacity-0 transition-all duration-500 group-hover:bg-gradient-to-t group-hover:from-olive/55 group-hover:to-transparent group-hover:opacity-100">
-          <span className="rounded-full bg-cream-light px-5 py-2 text-xs font-medium text-olive shadow-sm">
+        <span className="absolute inset-x-0 bottom-0 flex items-center justify-center pb-5 opacity-0 transition-all duration-500 group-hover:opacity-100">
+          <span className="rounded-full bg-gold px-5 py-2 text-xs font-semibold text-carbon shadow-sm">
             Ver detalle
           </span>
         </span>
       </div>
 
-      <div className="mt-3.5 flex items-baseline justify-between gap-3">
-        <h3 className="font-display text-lg leading-tight text-olive">
+      <div className="mt-3.5">
+        <h3 className="font-display text-lg leading-tight text-cream">
           {arrangement.name}
         </h3>
-        <span className="shrink-0 text-sm font-medium text-sage-dark">
-          {formatPrice(arrangement)}
-        </span>
+        <div className="mt-1 flex items-center gap-2">
+          <span className="text-sm font-medium text-gold">
+            {formatPrice(arrangement)}
+          </span>
+          {arrangement.category && (
+            <span className="text-gold/30">·</span>
+          )}
+          {arrangement.category && (
+            <p className="truncate text-xs uppercase tracking-[0.18em] text-gold/50">
+              {arrangement.category.name}
+            </p>
+          )}
+        </div>
       </div>
-      {arrangement.category && (
-        <p className="mt-0.5 text-xs uppercase tracking-[0.18em] text-sage">
-          {arrangement.category.name}
-        </p>
-      )}
     </button>
   );
 }

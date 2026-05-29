@@ -24,16 +24,14 @@ export default function SiteHeader() {
     <header
       className={`sticky top-0 z-40 transition-colors duration-300 ${
         scrolled
-          ? "border-b border-sage/20 bg-cream-light/90 backdrop-blur"
+          ? "border-b border-gold/20 bg-carbon/92 backdrop-blur"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
         <a href="#top" className="leading-none">
-          <span className="block font-display text-2xl tracking-tight text-olive">
-            {site.name}
-          </span>
-          <span className="eyebrow text-[0.58rem] text-sage-dark">Florería</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt={site.name} className="h-20 w-auto" />
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -41,7 +39,7 @@ export default function SiteHeader() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-olive/70 transition hover:text-olive"
+              className="text-sm text-cream/60 transition hover:text-cream"
             >
               {l.label}
             </a>
@@ -50,7 +48,7 @@ export default function SiteHeader() {
             href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-olive px-5 py-2 text-sm text-cream-light transition hover:bg-olive-dark"
+            className="btn-gold rounded-full px-5 py-2 text-sm transition"
           >
             WhatsApp
           </a>
@@ -58,7 +56,7 @@ export default function SiteHeader() {
 
         <a
           href="#catalogo"
-          className="rounded-full bg-olive px-4 py-2 text-sm text-cream-light md:hidden"
+          className="btn-gold rounded-full px-4 py-2 text-sm md:hidden"
         >
           Ver catálogo
         </a>
