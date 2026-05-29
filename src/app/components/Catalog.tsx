@@ -121,6 +121,8 @@ export default function Catalog() {
                 <path d="m21 21-4.3-4.3" />
               </svg>
               <input
+                id="buscar-arreglos"
+                name="buscar-arreglos"
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
